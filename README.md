@@ -1,4 +1,6 @@
-# Namaz Vakti
+# Namaz Vakti 
+
+This project is currently in Beta.
 
 A Zepp OS mini app for the Amazfit Bip 5 that shows daily prayer times and a live countdown to the next prayer.
 
