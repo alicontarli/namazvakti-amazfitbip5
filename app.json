@@ -1,0 +1,60 @@
+{
+  "configVersion": "v2",
+  "app": {
+    "appId": 27133,
+    "appName": "Namaz Vakti",
+    "appType": "app",
+    "version": {
+      "code": 4,
+      "name": "1.1.1"
+    },
+    "icon": "icon.png",
+    "vender": "zepp",
+    "description": "Bip 5 icin namaz vakitleri ve geri sayim uygulamasi"
+  },
+  "permissions": [
+    "data:os.device.info",
+    "device:os.local_storage"
+  ],
+  "runtime": {
+    "apiVersion": {
+      "compatible": "2.1.0",
+      "target": "2.1.0",
+      "minVersion": "2.1.0"
+    }
+  },
+  "targets": {
+    "320x380-amazfit-bip-5": {
+      "module": {
+        "page": {
+          "pages": [
+            "page/index"
+          ]
+        },
+        "setting": {
+          "path": "setting/index"
+        },
+        "app-side": {
+          "path": "app-side/index"
+        }
+      },
+      "platforms": [
+        {
+          "name": "Altai",
+          "deviceSource": 8454400
+        },
+        {
+          "name": "AltaiW",
+          "deviceSource": 8454401
+        }
+      ],
+      "designWidth": 320
+    }
+  },
+  "i18n": {
+    "en-US": {
+      "appName": "Namaz Vakti"
+    }
+  },
+  "defaultLanguage": "en-US"
+}
