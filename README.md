@@ -118,6 +118,3 @@ Still open for future polish:
 - Real-device testing was more reliable than emulator testing during development.
 - Some UI choices are currently optimized for stability on Zepp OS rather than maximum visual polish.
 
-## License
-
-This project is currently unpublished. Add your preferred license before sharing publicly.
