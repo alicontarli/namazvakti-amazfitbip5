@@ -171,114 +171,120 @@ Page({
     })
 
     hmUI.createWidget(hmUI.widget.FILL_RECT, {
-      x: 18,
-      y: 72,
-      w: 284,
-      h: 86,
-      radius: 26,
+      x: 20,
+      y: 82,
+      w: 280,
+      h: 78,
+      radius: 24,
       color: 0x123f6d
     })
 
     hmUI.createWidget(hmUI.widget.FILL_RECT, {
-      x: 120,
-      y: 86,
-      w: 80,
+      x: 122,
+      y: 95,
+      w: 76,
       h: 4,
       radius: 2,
       color: 0x7be7ff
     })
 
     this.state.nextPrayerWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      x: 34,
-      y: 98,
-      w: 252,
+      x: 40,
+      y: 106,
+      w: 240,
       h: 20,
       color: 0xeafcff,
-      text_size: 17,
+      text_size: 16,
       text: 'Sonraki: --',
       align_h: hmUI.align.CENTER_H,
+      align_v: hmUI.align.CENTER_V,
       text_style: hmUI.text_style.ELLIPSIS
     })
 
     this.state.countdownWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      x: 30,
-      y: 118,
-      w: 260,
-      h: 30,
+      x: 36,
+      y: 126,
+      w: 248,
+      h: 28,
       color: 0xfff2cf,
-      text_size: 28,
+      text_size: 26,
       text: '--:--:--',
       align_h: hmUI.align.CENTER_H,
+      align_v: hmUI.align.CENTER_V,
       text_style: hmUI.text_style.ELLIPSIS
     })
 
     this.state.cityWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      x: 34,
-      y: 168,
-      w: 252,
-      h: 18,
+      x: 40,
+      y: 171,
+      w: 240,
+      h: 16,
       color: 0x9db8d6,
       text_size: 12,
       text: '',
       align_h: hmUI.align.CENTER_H,
+      align_v: hmUI.align.CENTER_V,
       text_style: hmUI.text_style.ELLIPSIS
     })
 
     hmUI.createWidget(hmUI.widget.FILL_RECT, {
-      x: 18,
-      y: 188,
-      w: 284,
-      h: 146,
-      radius: 26,
+      x: 20,
+      y: 194,
+      w: 280,
+      h: 140,
+      radius: 24,
       color: 0x0d1d32
     })
 
     for (let i = 0; i < PRAYER_ROWS.length; i += 1) {
       const row = PRAYER_ROWS[i]
-      const top = 200 + i * 25
+      const top = 206 + i * 24
 
       hmUI.createWidget(hmUI.widget.FILL_RECT, {
-        x: 30,
+        x: 34,
         y: top,
-        w: 260,
-        h: 21,
-        radius: 12,
+        w: 252,
+        h: 18,
+        radius: 9,
         color: i === 0 ? 0x183f69 : i % 2 === 0 ? 0x112d4b : 0x0f2741
       })
 
       hmUI.createWidget(hmUI.widget.TEXT, {
-        x: 44,
-        y: top + 2,
-        w: 118,
-        h: 16,
+        x: 56,
+        y: top - 1,
+        w: 104,
+        h: 20,
         color: 0xffffff,
-        text_size: 15,
+        text_size: 14,
         text: row.label,
+        align_v: hmUI.align.CENTER_V,
         text_style: hmUI.text_style.ELLIPSIS
       })
 
       this.state.rowWidgets[row.key] = hmUI.createWidget(hmUI.widget.TEXT, {
-        x: 194,
-        y: top + 1,
-        w: 76,
-        h: 18,
+        x: 190,
+        y: top - 1,
+        w: 78,
+        h: 20,
         color: 0xdfffd9,
-        text_size: 17,
+        text_size: 16,
         text: '--:--',
         align_h: hmUI.align.RIGHT,
+        align_v: hmUI.align.CENTER_V,
         text_style: hmUI.text_style.ELLIPSIS
       })
     }
 
     this.state.statusWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      x: 38,
-      y: 317,
-      w: 244,
+      x: 44,
+      y: 318,
+      w: 232,
       h: 14,
       color: 0x7c98bc,
       text_size: 11,
       text: '',
       align_h: hmUI.align.CENTER_H,
+      align_v: hmUI.align.CENTER_V,
       text_style: hmUI.text_style.ELLIPSIS
     })
 

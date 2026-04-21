@@ -86,12 +86,12 @@ AppSettingsPage({
           },
           [
             TextInput({
-              label: 'Durum',
+              label: 'Senkron',
               value: syncStatus === 'ok' ? 'Bagli ve guncel' : syncStatus,
               disabled: true
             }),
             TextInput({
-              label: 'Son Konum',
+              label: 'Konum',
               value: syncLocation,
               disabled: true
             }),
