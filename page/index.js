@@ -116,6 +116,20 @@ function formatCountdown(diffMs) {
   )
 }
 
+function formatStatusText(value) {
+  const text = String(value || 'Demo veri')
+  if (text === 'Demo veri') {
+    return text
+  }
+  if (text === 'Mesaj koprusu yok') {
+    return 'Baglanti yok'
+  }
+  if (text !== 'Canli veri' && text.indexOf('-') === -1 && text.length > 0) {
+    return 'Senkron hatasi'
+  }
+  return text.length > 30 ? text.slice(0, 27) + '...' : text
+}
+
 Page({
   state: {
     timerId: null,
@@ -153,105 +167,120 @@ Page({
       y: 0,
       w: SCREEN_WIDTH,
       h: SCREEN_HEIGHT,
-      color: 0x08111d
+      color: 0x07111d
     })
 
     hmUI.createWidget(hmUI.widget.FILL_RECT, {
       x: 18,
-      y: 62,
+      y: 72,
       w: 284,
       h: 86,
-      radius: 24,
-      color: 0x143a63
+      radius: 26,
+      color: 0x123f6d
+    })
+
+    hmUI.createWidget(hmUI.widget.FILL_RECT, {
+      x: 120,
+      y: 86,
+      w: 80,
+      h: 4,
+      radius: 2,
+      color: 0x7be7ff
     })
 
     this.state.nextPrayerWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      x: 32,
-      y: 80,
-      w: 256,
-      h: 22,
-      color: 0xd7f7ff,
-      text_size: 18,
+      x: 34,
+      y: 98,
+      w: 252,
+      h: 20,
+      color: 0xeafcff,
+      text_size: 17,
       text: 'Sonraki: --',
-      align_h: hmUI.align.CENTER_H
+      align_h: hmUI.align.CENTER_H,
+      text_style: hmUI.text_style.ELLIPSIS
     })
 
     this.state.countdownWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      x: 32,
-      y: 104,
-      w: 256,
+      x: 30,
+      y: 118,
+      w: 260,
       h: 30,
-      color: 0xfff1ba,
+      color: 0xfff2cf,
       text_size: 28,
       text: '--:--:--',
-      align_h: hmUI.align.CENTER_H
-    })
-
-    hmUI.createWidget(hmUI.widget.FILL_RECT, {
-      x: 18,
-      y: 160,
-      w: 284,
-      h: 166,
-      radius: 24,
-      color: 0x0d2039
+      align_h: hmUI.align.CENTER_H,
+      text_style: hmUI.text_style.ELLIPSIS
     })
 
     this.state.cityWidget = hmUI.createWidget(hmUI.widget.TEXT, {
       x: 34,
       y: 168,
       w: 252,
-      h: 16,
-      color: 0x7ea6cf,
+      h: 18,
+      color: 0x9db8d6,
       text_size: 12,
       text: '',
-      align_h: hmUI.align.CENTER_H
+      align_h: hmUI.align.CENTER_H,
+      text_style: hmUI.text_style.ELLIPSIS
     })
 
-    this.state.statusWidget = hmUI.createWidget(hmUI.widget.TEXT, {
-      x: 34,
-      y: 320,
-      w: 252,
-      h: 14,
-      color: 0x6e8fb4,
-      text_size: 11,
-      text: '',
-      align_h: hmUI.align.CENTER_H
+    hmUI.createWidget(hmUI.widget.FILL_RECT, {
+      x: 18,
+      y: 188,
+      w: 284,
+      h: 146,
+      radius: 26,
+      color: 0x0d1d32
     })
 
     for (let i = 0; i < PRAYER_ROWS.length; i += 1) {
       const row = PRAYER_ROWS[i]
-      const top = 190 + i * 26
+      const top = 200 + i * 25
 
       hmUI.createWidget(hmUI.widget.FILL_RECT, {
-        x: 28,
+        x: 30,
         y: top,
-        w: 264,
-        h: 20,
-        radius: 14,
-        color: i === 0 ? 0x18436f : i % 2 === 0 ? 0x133353 : 0x102b46
+        w: 260,
+        h: 21,
+        radius: 12,
+        color: i === 0 ? 0x183f69 : i % 2 === 0 ? 0x112d4b : 0x0f2741
       })
 
       hmUI.createWidget(hmUI.widget.TEXT, {
-        x: 36,
-        y: top + 1,
-        w: 110,
-        h: 18,
+        x: 44,
+        y: top + 2,
+        w: 118,
+        h: 16,
         color: 0xffffff,
-        text_size: 16,
-        text: row.label
+        text_size: 15,
+        text: row.label,
+        text_style: hmUI.text_style.ELLIPSIS
       })
 
       this.state.rowWidgets[row.key] = hmUI.createWidget(hmUI.widget.TEXT, {
-        x: 182,
+        x: 194,
         y: top + 1,
-        w: 98,
+        w: 76,
         h: 18,
-        color: 0xb7ffd2,
+        color: 0xdfffd9,
         text_size: 17,
         text: '--:--',
-        align_h: hmUI.align.RIGHT
+        align_h: hmUI.align.RIGHT,
+        text_style: hmUI.text_style.ELLIPSIS
       })
     }
+
+    this.state.statusWidget = hmUI.createWidget(hmUI.widget.TEXT, {
+      x: 38,
+      y: 317,
+      w: 244,
+      h: 14,
+      color: 0x7c98bc,
+      text_size: 11,
+      text: '',
+      align_h: hmUI.align.CENTER_H,
+      text_style: hmUI.text_style.ELLIPSIS
+    })
 
     this.renderData()
     this.bindMessaging()
@@ -273,7 +302,7 @@ Page({
       if (data.method === 'PRAYER_TIMES_UPDATED' && data.result) {
         this.applyPayload(data.result)
       } else if (data.method === 'PRAYER_TIMES_ERROR' && data.error) {
-        this.state.statusText = data.error
+        this.state.statusText = 'Senkron hatasi'
         this.renderData()
       }
     }
@@ -295,7 +324,7 @@ Page({
         if (data && data.result) {
           this.applyPayload(data.result)
         } else {
-          this.state.statusText = data && data.error ? data.error : 'Demo veri'
+          this.state.statusText = data && data.error ? 'Senkron hatasi' : 'Demo veri'
           this.renderData()
         }
       })
@@ -332,7 +361,7 @@ Page({
     )
     this.state.statusWidget.setProperty(
       hmUI.prop.TEXT,
-      this.state.statusText || 'Demo veri'
+      formatStatusText(this.state.statusText || 'Demo veri')
     )
 
     for (let i = 0; i < PRAYER_ROWS.length; i += 1) {

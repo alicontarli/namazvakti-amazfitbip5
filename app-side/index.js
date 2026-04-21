@@ -4,8 +4,8 @@ const DEFAULT_COUNTRY = 'Turkey'
 const DEFAULT_CITY = 'Istanbul'
 const messageBuilder = new MessageBuilder()
 const API_URLS = [
-  'https://api.aladhan.com/v1/timingsByCity',
-  'http://api.aladhan.com/v1/timingsByCity'
+  'https://api.aladhan.com/v1/timingsByCity/',
+  'http://api.aladhan.com/v1/timingsByCity/'
 ]
 
 function unwrapSettingValue(value, fallbackValue) {
@@ -54,9 +54,19 @@ function normalizeApiTime(value) {
   return String(value || '--:--').split(' ')[0]
 }
 
+function getTodayApiDate() {
+  const now = new Date()
+  const day = String(now.getDate()).padStart(2, '0')
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const year = String(now.getFullYear())
+  return day + '-' + month + '-' + year
+}
+
 function buildApiUrl(baseUrl, country, city) {
+  const datePath = getTodayApiDate()
   return (
     baseUrl +
+    datePath +
     '?city=' +
     encodeURIComponent(city) +
     '&country=' +
@@ -83,7 +93,7 @@ async function fetchPrayerTimes(country, city) {
 
       const json = typeof response.body === 'string' ? JSON.parse(response.body) : response.body
 
-      if (!json || !json.data || !json.data.timings) {
+      if (!json || Number(json.code) !== 200 || !json.data || !json.data.timings) {
         throw new Error('API beklenen namaz vakti verisini donmedi')
       }
 
