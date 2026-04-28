@@ -1,4 +1,6 @@
-# Namaz Vakti
+# Namaz Vakti 
+
+This project is currently in Beta.
 
 `Namaz Vakti` is a Zepp OS mini app for the Amazfit Bip 5 that provides daily prayer times, a live countdown to the next prayer, and companion widget surfaces for quick access from the watch UI.
 
@@ -164,6 +166,7 @@ Still open for future improvement:
 - Real-device testing proved significantly more reliable than emulator testing during development.
 - Some Zepp OS surfaces behave differently depending on firmware and launcher/widget handling, so layout validation on the actual watch is strongly recommended.
 
-## License
+
 
 No license file has been added yet. Choose and add a license before publishing the repository publicly.
+
