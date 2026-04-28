@@ -5,8 +5,8 @@
     "appName": "Namaz Vakti",
     "appType": "app",
     "version": {
-      "code": 7,
-      "name": "1.1.4"
+      "code": 9,
+      "name": "1.2.1"
     },
     "icon": "icon.png",
     "vender": "zepp",
@@ -36,6 +36,35 @@
         },
         "app-side": {
           "path": "app-side/index"
+        },
+        "app-widget": {
+          "widgets": [
+            {
+              "path": "app-widget/index",
+              "icon": "icon.png",
+              "name": "namaz-vakti-widget",
+              "runtime": {
+                "type": "js"
+              }
+            }
+          ]
+        },
+        "secondary-widget": {
+          "widgets": [
+            {
+              "path": "secondary-widget/index",
+              "icon": "icon.png",
+              "name": "namaz-vakti-main-widget",
+              "runtime": {
+                "type": "js"
+              },
+              "i18n": {
+                "en-US": {
+                  "name": "Namaz Vakti"
+                }
+              }
+            }
+          ]
         }
       },
       "platforms": [
@@ -53,7 +82,14 @@
   },
   "i18n": {
     "en-US": {
-      "appName": "Namaz Vakti"
+      "appName": "Namaz Vakti",
+      "app-widget": {
+        "widgets": [
+          {
+            "name": "Namaz Vakti"
+          }
+        ]
+      }
     }
   },
   "defaultLanguage": "en-US"
