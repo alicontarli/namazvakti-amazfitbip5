@@ -49,7 +49,7 @@ AppWidget({
   },
 
   build() {
-    const lang = this.state.payload.language || 'tr'
+    const lang = this.state.payload.language || 'en'
     const t = getTranslation(lang)
 
     createWidget(widget.FILL_RECT, {
