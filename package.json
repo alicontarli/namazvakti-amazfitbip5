@@ -1,7 +1,7 @@
 {
-  "name": "empty",
-  "version": "1.0.0",
-  "description": "",
+  "name": "namazvakti-amazfitbip5",
+  "version": "1.3.0",
+  "description": "Namaz Vakti Zepp OS mini app for Amazfit Bip 5 with annual offline sync",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

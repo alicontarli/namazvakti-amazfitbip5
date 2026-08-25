@@ -13,3 +13,7 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# Antigravity workspace config
+.agents/
+AGENTS.md

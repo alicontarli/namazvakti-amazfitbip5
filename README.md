@@ -1,172 +1,153 @@
-# Namaz Vakti 
+# Namaz Vakti (Prayer Times for Amazfit Bip 5)
 
-This project is currently in Beta.
+[![Zepp OS](https://img.shields.io/badge/Zepp%20OS-2.1-blue.svg)](https://docs.zepp.com/)
+[![Target Device](https://img.shields.io/badge/Device-Amazfit%20Bip%205%20(320x380)-green.svg)](https://www.amazfit.com/)
+[![Languages](https://img.shields.io/badge/Languages-11%20Supported-purple.svg)]()
+[![Latest Release](https://img.shields.io/github/v/release/alicontarli/namazvakti-amazfitbip5?color=orange&label=Release)](https://github.com/alicontarli/namazvakti-amazfitbip5/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-`Namaz Vakti` is a Zepp OS mini app for the Amazfit Bip 5 that provides daily prayer times, a live countdown to the next prayer, and companion widget surfaces for quick access from the watch UI.
+`Namaz Vakti` (Prayer Times) is a modern, lightweight, and battery-efficient Zepp OS mini application designed specifically for the **Amazfit Bip 5** smartwatch.
 
-The project is built specifically for:
+It provides accurate daily prayer times, real-time countdown to the upcoming prayer, valid-until schedule tracking, and companion widget surfaces (`Shortcut Card` and `Secondary Widget`) for quick glance access right from your watch face.
 
-- Device: `Amazfit Bip 5`
-- Zepp OS: `2.1`
-- Language: `JavaScript (ES2015)`
+---
 
-## Overview
+## 🌟 Key Features
 
-This repository contains a complete Zepp OS application with three production-facing layers:
+- **Accurate Prayer Times:** Fajr (Sabah), Dhuhr (Öğle), Asr (İkindi), Maghrib (Akşam), and Isha (Yatsı).
+- **Live Countdown Timer:** Second-by-second live countdown to the next upcoming prayer.
+- **Single-Packet 60-Day Rolling Schedule:** Transmits a compact 60-day rolling window (~3.0 KB) in a **single unfragmented BLE packet** to guarantee 100% reliable synchronization without Bluetooth chunk drops or timeouts.
+- **Cumulative Local Memory:** Automatically merges incoming schedule days into the watch's local cache without wiping existing offline data.
+- **Smart Expiration & Validity Indicator:** Displays schedule validity status directly on the watch (e.g. `Son: 24 Eki (60 gün)` / `Until: 24 Oct`) with automatic amber warnings (`Son 2 gün - Güncelle`) when the schedule runs low.
+- **11-Language Localization:**
+  - 🇹🇷 Türkçe (Turkish)
+  - 🇬🇧 English
+  - 🇸🇦 العربية (Arabic)
+  - 🇧🇩 বাংলা (Bengali)
+  - 🇪🇸 Español (Spanish)
+  - 🇫🇷 Français (French)
+  - 🇩🇪 Deutsch (German)
+  - 🇷🇺 Русский (Russian)
+  - 🇮🇷 فارسی (Persian)
+  - 🇵🇰 اردو (Urdu)
+  - 🇮🇩 Bahasa Indonesia (Indonesian)
+- **Built-in Locations Database:**
+  - All **81 Provinces of Turkey** (01 Adana – 81 Düzce).
+  - Major world cities (Germany, UK, France, Netherlands, Belgium, Austria, Switzerland, Azerbaijan, Saudi Arabia, USA).
+- **Multi-Surface Companion:**
+  - Main Watch Application (`320x380`)
+  - Shortcut Card (`app-widget` / `320x112`)
+  - Secondary Widget (`secondary-widget` / `320x380`)
 
-- a phone-side settings screen for location input
-- a phone-side background service that fetches live prayer times
-- a watch-side application that renders the daily schedule and countdown
+---
 
-In addition, the project includes:
+## 📥 How to Install on Amazfit Bip 5
 
-- a `Shortcut Card` surface (`app-widget`)
-- a `Secondary Widget` surface for the widget area on supported watch firmware
+### Method 1: Install using the `.zab` Release Package (Recommended)
 
-## Features
+1. Go to the [**GitHub Releases**](https://github.com/alicontarli/namazvakti-amazfitbip5/releases) page.
+2. Download the latest compiled package: `namazvakti-bip5-v1.3.0.zab`.
+3. Open the **Zepp App** on your smartphone:
+   - Navigate to **Profile > Settings > About > Tap the Zepp icon 7 times** to unlock Developer Mode.
+   - Go to **Profile > Amazfit Bip 5 > Developer Mode**.
+   - Tap **Install Mini Program / Sideload (.zab)** and select the downloaded `.zab` file.
+4. The app will install directly to your Amazfit Bip 5!
 
-- Daily prayer time display for:
-  - Fajr
-  - Dhuhr
-  - Asr
-  - Maghrib
-  - Isha
-- Live countdown to the next prayer
-- Country and city configuration from the Zepp mobile app
-- Live synchronization from phone to watch through the Zepp messaging bridge
-- Local caching on the watch for resilient display after sync
-- Shortcut Card support
-- Secondary Widget support
+---
 
-## Architecture
+### Method 2: Build and Sideload from Source with Zeus CLI
 
-The project follows the standard Zepp OS split architecture:
+1. **Install Prerequisites:**
+   Ensure Node.js (v18 or v20 LTS) is installed, then install Zeus CLI:
+   ```bash
+   npm install -g @zeppos/zeus-cli
+   ```
 
-1. `setting/`
-   Phone-side settings UI used to store country and city.
-2. `app-side/`
-   Phone-side background service responsible for fetching data from the API and responding to watch requests.
-3. `page/`
-   Main watch application screen.
-4. `app-widget/`
-   Shortcut Card implementation.
-5. `secondary-widget/`
-   Secondary Widget implementation for widget-capable surfaces.
-6. `shared/`
-   Shared messaging bridge used by the watch and phone-side service.
+2. **Clone the Repository & Install Dependencies:**
+   ```bash
+   git clone https://github.com/alicontarli/namazvakti-amazfitbip5.git
+   cd namazvakti-amazfitbip5
+   npm install
+   ```
 
-## Project Structure
+3. **Build the Package:**
+   ```bash
+   zeus build -t 320x380-amazfit-bip-5
+   ```
+
+4. **Install via QR Code Preview:**
+   ```bash
+   zeus preview
+   ```
+   Scan the generated QR code in your terminal with the **Zepp mobile app** (in Developer Mode) to install directly to your watch.
+
+---
+
+### Method 3: Official Zepp App Store Publishing (For Developers)
+
+To distribute the application publicly to all Amazfit Bip 5 users worldwide with a permanent 1-click store link:
+1. Log in to the [Zepp Open Platform](https://developer.zepp.com/).
+2. Submit the compiled `dist/namazvakti-bip5-v1.3.0.zab` package under **Mini Programs**.
+3. Once approved by Zepp, users can install it directly from the Zepp App Store without enabling Developer Mode.
+
+---
+
+## 📐 Project Architecture
 
 ```text
-app.js
-app.json
-app-side/
-app-widget/
-page/
-secondary-widget/
-setting/
-shared/
-assets/
-README.md
+├── app.json                # Zepp OS 2.1 manifest, targets & multi-locale i18n
+├── app.js                  # Global application lifecycle & message bridge
+├── app-side/
+│   └── index.js            # Phone-side background service (Aladhan API fetch & BLE sync)
+├── setting/
+│   └── index.js            # Clean mobile settings UI (Language, Country, City pickers)
+├── page/
+│   └── index.js            # Main watch app interface (320x380 rectangular layout)
+├── app-widget/
+│   └── index.js            # Shortcut card interface (320x112)
+├── secondary-widget/
+│   └── index.js            # Full-screen secondary widget interface (320x380)
+├── shared/
+│   ├── prayer-utils.js     # Unified prayer math, countdown, validity & cache helpers
+│   ├── locations.js        # 81 Turkish cities & world capitals dataset
+│   ├── i18n.js             # 11-language localization dictionary
+│   ├── message.js          # Device-side BLE communication protocol
+│   └── message-side.js     # Phone-side BLE communication protocol
+└── assets/
+    └── 320x380-amazfit-bip-5/
+        └── icon.png        # Official high-resolution application icon
 ```
 
-## Requirements
+---
 
-- Node.js
-- Zeus CLI
-- Zepp mobile app
-- Amazfit Bip 5 for real-device testing
+## ⚙️ How It Works (Bluetooth & Offline Sync)
 
-## Development
+```mermaid
+sequenceDiagram
+    participant S as Phone Settings (Zepp App)
+    participant B as Phone Background Service
+    participant API as Aladhan Prayer API
+    participant W as Amazfit Bip 5 Watch
 
-Install Zeus CLI if it is not already available:
-
-```bash
-npm install -g @zeppos/zeus-cli
+    S->>B: User selects Location/Language
+    B->>API: Fetch Annual / Monthly Calendar (Diyanet Method 13)
+    API-->>B: Return Prayer Timings
+    B->>B: Extract 60-Day Rolling Window (~3.0 KB)
+    B->>W: Send 1 Single BLE Packet (Zero fragmentation)
+    W->>W: Merge with localStorage Cache
+    W->>W: Display Timings & Real-Time Countdown
 ```
 
-Move into the project directory:
+---
 
-```bash
-cd namazvakti-clean
-```
+## ℹ️ Notes & FAQ
 
-Build the application:
+- **Data Source:** Prayer timings are calculated using the official [Aladhan API](https://aladhan.com/prayer-times-api) with the Diyanet calculation method (Method 13).
+- **Target Device:** Specifically optimized for Amazfit Bip 5 (`320x380` screen resolution, Zepp OS 2.1).
+- **Developer Sideloading Note:** When previewing via temporary developer QR codes, Zepp companion app may show `NULL` in the mobile-side widget preview tab due to sideload cache. The widgets function completely on the watch hardware.
 
-```bash
-zeus build -t 320x380-amazfit-bip-5
-```
+---
 
-Generate a preview QR code for installation on a real watch:
+## 📄 License
 
-```bash
-zeus preview
-```
-
-## Runtime Flow
-
-The runtime flow is intentionally simple and reliable:
-
-1. The watch app requests prayer data through the shared message bridge.
-2. The phone-side service receives the request.
-3. The service fetches the current day prayer schedule from the Aladhan API.
-4. The response is cached and sent back to the watch.
-5. The main app, Shortcut Card, and Secondary Widget read from the same shared cached payload.
-
-## API
-
-Prayer times are fetched from the Aladhan API:
-
-- `https://api.aladhan.com`
-
-The implementation uses the date-based `timingsByCity` endpoint. This was chosen deliberately because the non-dated endpoint currently redirects, and direct date-based requests are more reliable in Zepp-side fetch flows.
-
-## Widget Support
-
-The repository currently includes two widget-style surfaces:
-
-- `app-widget`
-  Exposed as a `Shortcut Card`
-- `secondary-widget`
-  Intended for the standard widget surface on supported device firmware
-
-### Known Widget Note
-
-There is still a known issue around the widget guide / widget presentation layer on some surfaces. In practice:
-
-- the widgets are usable
-- Shortcut Card support is working
-- Secondary Widget support is implemented
-- some widget presentation details may still require additional refinement depending on firmware behavior and Zepp-side widget handling
-
-This is a polish issue, not a blocker for normal application use.
-
-## Current Status
-
-Implemented and working:
-
-- main watch app
-- live prayer time sync
-- next prayer countdown
-- location settings
-- shared watch cache
-- Shortcut Card
-- Secondary Widget
-
-Still open for future improvement:
-
-- additional UI refinement for widgets
-- settings screen polish
-- optional reminder / notification features
-- possible exploration of richer watchface-style integrations on newer API levels
-
-## Notes
-
-- The project targets the Bip 5 rectangular `320x380` layout specifically.
-- Real-device testing proved significantly more reliable than emulator testing during development.
-- Some Zepp OS surfaces behave differently depending on firmware and launcher/widget handling, so layout validation on the actual watch is strongly recommended.
-
-
-
-No license file has been added yet. Choose and add a license before publishing the repository publicly.
-
+This project is licensed under the [MIT License](LICENSE).

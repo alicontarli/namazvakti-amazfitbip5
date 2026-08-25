@@ -7,159 +7,22 @@ import {
   setAppWidgetSize
 } from '@zos/ui'
 import { localStorage } from '@zos/storage'
-
-const CACHE_KEY = 'prayer_times_cache'
-
-const FALLBACK_PAYLOAD = {
-  city: 'Istanbul',
-  country: 'Turkey',
-  source: 'fallback',
-  date: '2026-04-28',
-  timings: {
-    Fajr: '04:35',
-    Dhuhr: '13:08',
-    Asr: '16:53',
-    Maghrib: '19:57',
-    Isha: '21:25'
-  }
-}
-
-const PRAYER_ROWS = [
-  { key: 'Fajr', label: 'Sabah' },
-  { key: 'Dhuhr', label: 'Ogle' },
-  { key: 'Asr', label: 'Ikindi' },
-  { key: 'Maghrib', label: 'Aksam' },
-  { key: 'Isha', label: 'Yatsi' }
-]
-
-function sanitizeTimeText(value) {
-  if (!value) {
-    return '--:--'
-  }
-
-  const clean = String(value).split(' ')[0]
-  const matched = clean.match(/^(\d{1,2}):(\d{2})/)
-  if (!matched) {
-    return '--:--'
-  }
-
-  return matched[1].padStart(2, '0') + ':' + matched[2]
-}
-
-function normalizePayload(rawValue) {
-  try {
-    const parsed = rawValue ? JSON.parse(rawValue) : null
-    const source = parsed && parsed.timings ? parsed : FALLBACK_PAYLOAD
-
-    return {
-      city: source.city || FALLBACK_PAYLOAD.city,
-      country: source.country || FALLBACK_PAYLOAD.country,
-      source: source.source || 'cache',
-      date: source.date || '',
-      timings: {
-        Fajr: sanitizeTimeText(source.timings && source.timings.Fajr),
-        Dhuhr: sanitizeTimeText(source.timings && source.timings.Dhuhr),
-        Asr: sanitizeTimeText(source.timings && source.timings.Asr),
-        Maghrib: sanitizeTimeText(source.timings && source.timings.Maghrib),
-        Isha: sanitizeTimeText(source.timings && source.timings.Isha)
-      }
-    }
-  } catch (error) {
-    return FALLBACK_PAYLOAD
-  }
-}
-
-function buildPrayerTimestamp(timeText, addDay) {
-  const now = new Date()
-  const parts = String(timeText).split(':')
-  const hour = Number(parts[0] || 0)
-  const minute = Number(parts[1] || 0)
-
-  return new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() + addDay,
-    hour,
-    minute,
-    0,
-    0
-  ).getTime()
-}
-
-function getNextPrayer(payload, nowMs) {
-  for (let i = 0; i < PRAYER_ROWS.length; i += 1) {
-    const row = PRAYER_ROWS[i]
-    const prayerTime = buildPrayerTimestamp(payload.timings[row.key], 0)
-
-    if (prayerTime > nowMs) {
-      return {
-        label: row.label,
-        time: payload.timings[row.key],
-        diffMs: prayerTime - nowMs
-      }
-    }
-  }
-
-  return {
-    label: 'Sabah',
-    time: payload.timings.Fajr,
-    diffMs: buildPrayerTimestamp(payload.timings.Fajr, 1) - nowMs
-  }
-}
-
-function getPreviousPrayer(payload, nowMs) {
-  let previous = null
-
-  for (let i = 0; i < PRAYER_ROWS.length; i += 1) {
-    const row = PRAYER_ROWS[i]
-    const prayerTime = buildPrayerTimestamp(payload.timings[row.key], 0)
-
-    if (prayerTime <= nowMs) {
-      previous = {
-        label: row.label,
-        timeMs: prayerTime
-      }
-    }
-  }
-
-  if (previous) {
-    return previous
-  }
-
-  return {
-    label: 'Yatsi',
-    timeMs: buildPrayerTimestamp(payload.timings.Isha, -1)
-  }
-}
-
-function formatCompactCountdown(diffMs) {
-  const totalMinutes = Math.max(0, Math.floor(diffMs / 60000))
-  const hours = Math.floor(totalMinutes / 60)
-  const minutes = totalMinutes % 60
-  return String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0')
-}
-
-function getMinuteBadge(payload, nextPrayer, nowMs) {
-  const previousPrayer = getPreviousPrayer(payload, nowMs)
-  const elapsedMinutes = Math.floor((nowMs - previousPrayer.timeMs) / 60000)
-
-  if (elapsedMinutes >= 0 && elapsedMinutes <= 5) {
-    return '+' + String(Math.max(1, elapsedMinutes))
-  }
-
-  const remainingMinutes = Math.ceil(nextPrayer.diffMs / 60000)
-
-  if (remainingMinutes > 99) {
-    return '99+'
-  }
-
-  return String(remainingMinutes)
-}
+import {
+  CACHE_KEY,
+  FALLBACK_SCHEDULE,
+  normalizePayload,
+  mergePayloads,
+  getNextPrayer,
+  getMinuteBadge,
+  formatCompactCountdown
+} from '../shared/prayer-utils'
+import { getTranslation } from '../shared/i18n'
 
 AppWidget({
   state: {
-    payload: FALLBACK_PAYLOAD,
+    payload: FALLBACK_SCHEDULE,
     messageBuilder: null,
+    titleWidget: null,
     labelWidget: null,
     prayerWidget: null,
     timeWidget: null,
@@ -186,6 +49,9 @@ AppWidget({
   },
 
   build() {
+    const lang = this.state.payload.language || 'tr'
+    const t = getTranslation(lang)
+
     createWidget(widget.FILL_RECT, {
       x: 0,
       y: 0,
@@ -204,14 +70,14 @@ AppWidget({
       color: 0x123f6d
     })
 
-    createWidget(widget.TEXT, {
+    this.state.titleWidget = createWidget(widget.TEXT, {
       x: 28,
       y: 22,
       w: 180,
       h: 16,
       color: 0x8edcff,
       text_size: 12,
-      text: 'Namaz Vakti',
+      text: t.appName,
       text_style: text_style.ELLIPSIS
     })
 
@@ -222,7 +88,7 @@ AppWidget({
       h: 16,
       color: 0xbdeaff,
       text_size: 12,
-      text: 'Sonraki',
+      text: t.next,
       text_style: text_style.ELLIPSIS
     })
 
@@ -335,16 +201,25 @@ AppWidget({
   },
 
   applyPayload(rawPayload) {
-    const payload = normalizePayload(JSON.stringify(rawPayload))
-    this.state.payload = payload
-    localStorage.setItem(CACHE_KEY, JSON.stringify(payload))
+    const updated = mergePayloads(this.state.payload, rawPayload)
+    this.state.payload = updated
+    localStorage.setItem(CACHE_KEY, JSON.stringify(updated))
     this.renderData()
   },
 
   renderData() {
     const payload = this.state.payload
+    const lang = payload.language || 'en'
+    const t = getTranslation(lang)
+
     const nowMs = Date.now()
     const nextPrayer = getNextPrayer(payload, nowMs)
+
+    this.state.titleWidget &&
+      this.state.titleWidget.setProperty(prop.TEXT, t.appName)
+
+    this.state.labelWidget &&
+      this.state.labelWidget.setProperty(prop.TEXT, t.next)
 
     this.state.prayerWidget &&
       this.state.prayerWidget.setProperty(
