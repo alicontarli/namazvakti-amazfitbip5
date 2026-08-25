@@ -41,54 +41,61 @@ It provides accurate daily prayer times, real-time countdown to the upcoming pra
 
 ---
 
-## 📥 How to Install on Amazfit Bip 5
+## 📥 Installation Guide
 
-### Method 1: Install using the `.zab` Release Package (Recommended)
+### Enabling Developer Mode in Zepp App
+1. Open the **Zepp App** on your smartphone.
+2. Go to **Profile > Settings > About**.
+3. Tap the **Zepp logo 7 times** until you see the message *"Developer mode enabled"*.
+4. Go back to **Profile > Amazfit Bip 5 > Developer Mode**.
 
-1. Go to the [**GitHub Releases**](https://github.com/alicontarli/namazvakti-amazfitbip5/releases) page.
-2. Download the latest compiled package: `namazvakti-bip5-v1.3.0.zab`.
-3. Open the **Zepp App** on your smartphone:
-   - Navigate to **Profile > Settings > About > Tap the Zepp icon 7 times** to unlock Developer Mode.
-   - Go to **Profile > Amazfit Bip 5 > Developer Mode**.
-   - Tap **Install Mini Program / Sideload (.zab)** and select the downloaded `.zab` file.
-4. The app will install directly to your Amazfit Bip 5!
+You will see the Developer Mode menu:
+- **Scan:** Scan QR codes to install preview builds directly.
+- **Bridge:** Connect to Zeus CLI over local Wi-Fi.
+- **Device Information:** View MAC and device details.
+- **JS Log Level:** View real-time console logs.
 
 ---
 
-### Method 2: Build and Sideload from Source with Zeus CLI
+### Option 1: Quick Install via Zeus Preview (Recommended for Sideloading)
 
-1. **Install Prerequisites:**
-   Ensure Node.js (v18 or v20 LTS) is installed, then install Zeus CLI:
+1. Install Zeus CLI on your computer:
    ```bash
    npm install -g @zeppos/zeus-cli
    ```
-
-2. **Clone the Repository & Install Dependencies:**
+2. Clone the repository and install dependencies:
    ```bash
    git clone https://github.com/alicontarli/namazvakti-amazfitbip5.git
    cd namazvakti-amazfitbip5
    npm install
    ```
-
-3. **Build the Package:**
-   ```bash
-   zeus build -t 320x380-amazfit-bip-5
-   ```
-
-4. **Install via QR Code Preview:**
+3. Generate the preview installation QR code:
    ```bash
    zeus preview
    ```
-   Scan the generated QR code in your terminal with the **Zepp mobile app** (in Developer Mode) to install directly to your watch.
+4. On your phone, open **Zepp App > Profile > Amazfit Bip 5 > Developer Mode > Scan** and scan the QR code displayed in your terminal. The app will install instantly to your watch!
 
 ---
 
-### Method 3: Official Zepp App Store Publishing (For Developers)
+### Option 2: Sideloading via Bridge (Wi-Fi)
 
-To distribute the application publicly to all Amazfit Bip 5 users worldwide with a permanent 1-click store link:
-1. Log in to the [Zepp Open Platform](https://developer.zepp.com/).
-2. Submit the compiled `dist/namazvakti-bip5-v1.3.0.zab` package under **Mini Programs**.
-3. Once approved by Zepp, users can install it directly from the Zepp App Store without enabling Developer Mode.
+1. In Zepp App, go to **Profile > Amazfit Bip 5 > Developer Mode > Bridge** and toggle it **ON**.
+2. Note your phone's IP address displayed on the screen.
+3. In your terminal, run:
+   ```bash
+   zeus dev --ip <PHONE_IP_ADDRESS>
+   ```
+4. The package will be compiled and transferred directly over your local network to your watch.
+
+---
+
+### Option 3: Official Zepp App Store Submission (For Public Store Distribution)
+
+To make the app installable with 1-click for all users worldwide without requiring Developer Mode:
+1. Download the compiled release package from [GitHub Releases](https://github.com/alicontarli/namazvakti-amazfitbip5/releases): `namazvakti-bip5-v1.3.0.zab` (or find it in the `dist/` folder after `zeus build`).
+2. Log in to the [Zepp Open Platform](https://developer.zepp.com/).
+3. Create a new Mini Program and upload the `.zab` file.
+4. Submit for review. Once approved, an official permanent store link and QR code will be generated.
 
 ---
 
