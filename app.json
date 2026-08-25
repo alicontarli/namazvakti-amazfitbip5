@@ -23,21 +23,6 @@
       "minVersion": "2.1.0"
     }
   },
-  "defaultLanguage": "tr-TR",
-  "i18n": {
-    "en-US": {
-      "appName": "Namaz Vakti"
-    },
-    "tr-TR": {
-      "appName": "Namaz Vakti"
-    },
-    "ar-SA": {
-      "appName": "Namaz Vakti"
-    },
-    "id-ID": {
-      "appName": "Namaz Vakti"
-    }
-  },
   "targets": {
     "320x380-amazfit-bip-5": {
       "module": {
@@ -57,20 +42,9 @@
             {
               "path": "app-widget/index",
               "icon": "icon.png",
-              "name": "Namaz Vakti",
-              "i18n": {
-                "en-US": {
-                  "name": "Namaz Vakti"
-                },
-                "tr-TR": {
-                  "name": "Namaz Vakti"
-                },
-                "ar-SA": {
-                  "name": "Namaz Vakti"
-                },
-                "id-ID": {
-                  "name": "Namaz Vakti"
-                }
+              "name": "namaz-vakti-widget",
+              "runtime": {
+                "type": "js"
               }
             }
           ]
@@ -80,7 +54,10 @@
             {
               "path": "secondary-widget/index",
               "icon": "icon.png",
-              "name": "Namaz Vakti",
+              "name": "namaz-vakti-main-widget",
+              "runtime": {
+                "type": "js"
+              },
               "i18n": {
                 "en-US": {
                   "name": "Namaz Vakti"
@@ -111,5 +88,48 @@
       ],
       "designWidth": 320
     }
-  }
+  },
+  "i18n": {
+    "en-US": {
+      "appName": "Namaz Vakti",
+      "app-widget": {
+        "widgets": [
+          {
+            "name": "Namaz Vakti"
+          }
+        ]
+      }
+    },
+    "tr-TR": {
+      "appName": "Namaz Vakti",
+      "app-widget": {
+        "widgets": [
+          {
+            "name": "Namaz Vakti"
+          }
+        ]
+      }
+    },
+    "ar-SA": {
+      "appName": "Namaz Vakti",
+      "app-widget": {
+        "widgets": [
+          {
+            "name": "Namaz Vakti"
+          }
+        ]
+      }
+    },
+    "id-ID": {
+      "appName": "Namaz Vakti",
+      "app-widget": {
+        "widgets": [
+          {
+            "name": "Namaz Vakti"
+          }
+        ]
+      }
+    }
+  },
+  "defaultLanguage": "en-US"
 }
