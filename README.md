@@ -2,7 +2,7 @@
 
 [![Zepp OS](https://img.shields.io/badge/Zepp%20OS-2.1-blue.svg)](https://docs.zepp.com/)
 [![Target Device](https://img.shields.io/badge/Device-Amazfit%20Bip%205%20(320x380)-green.svg)](https://www.amazfit.com/)
-[![Languages](https://img.shields.io/badge/Languages-11%20Supported-purple.svg)]()
+[![Languages](https://img.shields.io/badge/Languages-4%20Supported-purple.svg)]()
 [![Latest Release](https://img.shields.io/github/v/release/alicontarli/namazvakti-amazfitbip5?color=orange&label=Release)](https://github.com/alicontarli/namazvakti-amazfitbip5/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -19,18 +19,11 @@ It provides accurate daily prayer times, real-time countdown to the upcoming pra
 - **Single-Packet 60-Day Rolling Schedule:** Transmits a compact 60-day rolling window (~3.0 KB) in a **single unfragmented BLE packet** to guarantee 100% reliable synchronization without Bluetooth chunk drops or timeouts.
 - **Cumulative Local Memory:** Automatically merges incoming schedule days into the watch's local cache without wiping existing offline data.
 - **Smart Expiration & Validity Indicator:** Displays schedule validity status directly on the watch (e.g. `Son: 24 Eki (60 gün)` / `Until: 24 Oct`) with automatic amber warnings (`Son 2 gün - Güncelle`) when the schedule runs low.
-- **11-Language Localization:**
-  - 🇹🇷 Türkçe (Turkish)
-  - 🇬🇧 English
-  - 🇸🇦 العربية (Arabic)
-  - 🇧🇩 বাংলা (Bengali)
-  - 🇪🇸 Español (Spanish)
-  - 🇫🇷 Français (French)
-  - 🇩🇪 Deutsch (German)
-  - 🇷🇺 Русский (Russian)
-  - 🇮🇷 فارسی (Persian)
-  - 🇵🇰 اردو (Urdu)
-  - 🇮🇩 Bahasa Indonesia (Indonesian)
+- **4 Focused Languages:**
+  - 🇹🇷 **Türkçe (Turkish)**
+  - 🇬🇧 **English**
+  - 🇸🇦 **العربية (Arabic)**
+  - 🇮🇩 **Bahasa Indonesia (Indonesian)**
 - **Built-in Locations Database:**
   - All **81 Provinces of Turkey** (01 Adana – 81 Düzce).
   - Major world cities (Germany, UK, France, Netherlands, Belgium, Austria, Switzerland, Azerbaijan, Saudi Arabia, USA).
@@ -115,7 +108,7 @@ The compiled `namazvakti-bip5-v1.3.0.zab` package is ready for official store pu
 ├── shared/
 │   ├── prayer-utils.js     # Unified prayer math, countdown, validity & cache helpers
 │   ├── locations.js        # 81 Turkish cities & world capitals dataset
-│   ├── i18n.js             # 11-language localization dictionary
+│   ├── i18n.js             # 4-language localization dictionary (TR, EN, AR, ID)
 │   ├── message.js          # Device-side BLE communication protocol
 │   └── message-side.js     # Phone-side BLE communication protocol
 └── assets/

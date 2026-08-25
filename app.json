@@ -34,18 +34,6 @@
     "ar-SA": {
       "appName": "Namaz Vakti"
     },
-    "de-DE": {
-      "appName": "Namaz Vakti"
-    },
-    "fr-FR": {
-      "appName": "Namaz Vakti"
-    },
-    "es-ES": {
-      "appName": "Namaz Vakti"
-    },
-    "ru-RU": {
-      "appName": "Namaz Vakti"
-    },
     "id-ID": {
       "appName": "Namaz Vakti"
     }
@@ -76,6 +64,12 @@
                 },
                 "tr-TR": {
                   "name": "Namaz Vakti"
+                },
+                "ar-SA": {
+                  "name": "Namaz Vakti"
+                },
+                "id-ID": {
+                  "name": "Namaz Vakti"
                 }
               }
             }
@@ -92,6 +86,12 @@
                   "name": "Namaz Vakti"
                 },
                 "tr-TR": {
+                  "name": "Namaz Vakti"
+                },
+                "ar-SA": {
+                  "name": "Namaz Vakti"
+                },
+                "id-ID": {
                   "name": "Namaz Vakti"
                 }
               }
