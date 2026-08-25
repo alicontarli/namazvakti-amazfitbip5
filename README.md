@@ -89,13 +89,11 @@ You will see the Developer Mode menu:
 
 ---
 
-### Option 3: Official Zepp App Store Submission (For Public Store Distribution)
+### 🚀 Roadmap: Zepp App Store Release
 
-To make the app installable with 1-click for all users worldwide without requiring Developer Mode:
-1. Download the compiled release package from [GitHub Releases](https://github.com/alicontarli/namazvakti-amazfitbip5/releases): `namazvakti-bip5-v1.3.0.zab` (or find it in the `dist/` folder after `zeus build`).
-2. Log in to the [Zepp Open Platform](https://developer.zepp.com/).
-3. Create a new Mini Program and upload the `.zab` file.
-4. Submit for review. Once approved, an official permanent store link and QR code will be generated.
+The compiled `namazvakti-bip5-v1.3.0.zab` package is ready for official store publishing:
+1. Submitting to [Zepp Open Platform](https://developer.zepp.com/) is planned.
+2. Once officially approved and published on the Zepp App Store, a permanent 1-click store install link and official QR code will be added here for all users.
 
 ---
 
